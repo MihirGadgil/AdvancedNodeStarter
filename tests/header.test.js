@@ -13,11 +13,11 @@ afterEach(async () => {
 
 afterAll(async () => {
     mongoose.disconnect();
-})
+});
 
 test('Header must display Logo', async () => {
 
-    const text = await page.$eval('a.brand-logo', el => el.innerHTML);
+    const text = await page.getContentOf('a.brand-logo');
     expect(text).toEqual('Blogster');
 });
 
