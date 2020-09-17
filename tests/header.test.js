@@ -1,3 +1,4 @@
+Number.prototype._called = {};
 const Page = require('./helper/page');
 const mongoose = require('mongoose');
 
