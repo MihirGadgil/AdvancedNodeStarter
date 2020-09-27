@@ -64,3 +64,34 @@ describe('When Logged in', async () => {
         });
     });
 });
+
+describe('User is not logged in', async () => {
+    test('User cannot create blog post', async () => {
+        const result = await page.evaluate(() => {
+            return fetch('/api/blogs', {
+                method: 'POST',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ title: 'My unauthorized access', content: 'Test Content' })
+            }).then(res => res.json());
+        });
+        
+        expect(result).toEqual({ error: 'You must log in!'});
+    });
+
+    test('USer cannot fetch posts', async () => {
+        const result = await page.evaluate(() => {
+            return fetch('/api/blogs', {
+                method: 'GET',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json());
+        });
+        
+        expect(result).toEqual({ error: 'You must log in!'});
+    });
+});
